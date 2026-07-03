@@ -156,3 +156,27 @@ INSERT INTO alumnos (nombre, apellido, id_curso, fecha_nacimiento, hace_deportes
 INSERT INTO alumnos (nombre, apellido, id_curso, fecha_nacimiento, hace_deportes) VALUES ('Franco', 'Urquizo Barba', 5, '2008-01-24', TRUE);
 INSERT INTO alumnos (nombre, apellido, id_curso, fecha_nacimiento, hace_deportes) VALUES ('Alexia', 'Wainstok', 5, '2007-08-07', FALSE);
 INSERT INTO alumnos (nombre, apellido, id_curso, fecha_nacimiento, hace_deportes) VALUES ('Morena Yael', 'Zalcman', 5, '2008-05-12', TRUE);
+
+-- Tabla materias
+CREATE TABLE materias (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(75) NOT NULL
+);
+
+-- Tabla calificaciones
+-- Cada alumno tiene UNA sola calificacion por materia (no se repite la combinacion alumno+materia).
+CREATE TABLE calificaciones (
+    id SERIAL PRIMARY KEY,
+    id_alumno INT NOT NULL REFERENCES alumnos(id),
+    id_materia INT NOT NULL REFERENCES materias(id),
+    nota INT NOT NULL,
+    fecha DATE NOT NULL DEFAULT CURRENT_DATE,
+    UNIQUE(id_alumno, id_materia)
+);
+
+-- Datos de prueba para materias
+INSERT INTO materias (nombre) VALUES ('Matematica');
+INSERT INTO materias (nombre) VALUES ('Lengua');
+INSERT INTO materias (nombre) VALUES ('Historia');
+INSERT INTO materias (nombre) VALUES ('Programacion');
+INSERT INTO materias (nombre) VALUES ('Base de Datos');

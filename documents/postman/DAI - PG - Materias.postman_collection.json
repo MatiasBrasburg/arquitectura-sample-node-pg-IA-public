@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "DAI - PG - Materias",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "materiaId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET materias",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/materias",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "materias"]
+        }
+      }
+    },
+    {
+      "name": "GET materia por id",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/materias/{{materiaId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "materias", "{{materiaId}}"]
+        }
+      }
+    },
+    {
+      "name": "POST materia",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Fisica\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/materias",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "materias"]
+        }
+      }
+    },
+    {
+      "name": "PUT materia",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": {{materiaId}},\n  \"nombre\": \"Fisica Editada\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/materias/{{materiaId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "materias", "{{materiaId}}"]
+        }
+      }
+    },
+    {
+      "name": "DELETE materia",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/materias/{{materiaId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "materias", "{{materiaId}}"]
+        }
+      }
+    }
+  ]
+}
