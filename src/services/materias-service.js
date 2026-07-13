@@ -1,4 +1,5 @@
 import MateriasRepository from '../repositories/materias-repository.js';
+import { validarEntidadConNombre } from '../helpers/validaciones-helper.js';
 
 export default class MateriasService {
     constructor() {
@@ -20,7 +21,7 @@ export default class MateriasService {
 
     createAsync = async (entity) => {
         console.log(`MateriasService.createAsync(${JSON.stringify(entity)})`);
-        this.validarNombre(entity?.nombre);
+        validarEntidadConNombre(entity, 'materia');
 
         const rowsAffected = await this.MateriasRepository.createAsync(entity);
         return rowsAffected;
@@ -28,9 +29,7 @@ export default class MateriasService {
 
     updateAsync = async (entity) => {
         console.log(`MateriasService.updateAsync(${JSON.stringify(entity)})`);
-        if (entity.nombre != null) {
-            this.validarNombre(entity.nombre);
-        }
+        validarEntidadConNombre(entity, 'materia');
 
         const rowsAffected = await this.MateriasRepository.updateAsync(entity);
         return rowsAffected;
@@ -40,11 +39,5 @@ export default class MateriasService {
         console.log(`MateriasService.deleteByIdAsync(${id})`);
         const rowsAffected = await this.MateriasRepository.deleteByIdAsync(id);
         return rowsAffected;
-    }
-
-    validarNombre = (nombre) => {
-        if (!nombre || nombre.trim().length === 0) {
-            throw new Error(`El nombre es obligatorio.`);
-        }
     }
 }

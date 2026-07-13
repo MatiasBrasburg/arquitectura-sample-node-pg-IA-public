@@ -1,22 +1,8 @@
 import AlumnosRepository from '../repositories/alumnos-repository.js';
 import CursosService from './cursos-service.js';
-
-function calcularEdad(fechaNacimiento) {
-    if (!fechaNacimiento) return null;
-    const hoy = new Date();
-    const nacimiento = new Date(fechaNacimiento);
-    let edad = hoy.getFullYear() - nacimiento.getFullYear();
-    const mesDiff = hoy.getMonth() - nacimiento.getMonth();
-    if (mesDiff < 0 || (mesDiff === 0 && hoy.getDate() < nacimiento.getDate())) {
-        edad--;
-    }
-    return edad;
-}
-
-function agregarEdad(alumno) {
-    if (!alumno) return alumno;
-    return { ...alumno, edad: calcularEdad(alumno.fecha_nacimiento) };
-}
+import { agregarEdad } from '../helpers/fechas-helper.js';
+import { ErrorValidacion } from '../helpers/errores-helper.js';
+import { validarAlumno } from '../helpers/validaciones-helper.js';
 
 export default class AlumnosService {
     constructor() {
@@ -41,6 +27,7 @@ export default class AlumnosService {
 
     createAsync = async (entity) => {
         console.log(`AlumnosService.createAsync(${JSON.stringify(entity)})`);
+        validarAlumno(entity);
         // Regla de negocio!!!
         await this.validarCursoExiste(entity.id_curso);
         // Si llegue aca es que no hubo un error.
@@ -50,6 +37,7 @@ export default class AlumnosService {
 
     updateAsync = async (entity) => {
         console.log(`AlumnosService.updateAsync(${JSON.stringify(entity)})`);
+        validarAlumno(entity, { parcial: true });
         // Regla de Negocio!
         if (entity.id_curso) {
             await this.validarCursoExiste(entity.id_curso);
@@ -70,7 +58,7 @@ export default class AlumnosService {
 
         const curso = await this.CursosService.getByIdAsync(idCurso);
         if (curso == null) {
-            throw new Error(`El curso con id ${idCurso} no existe.`);
+            throw new ErrorValidacion(`El curso con id ${idCurso} no existe.`);
         }
     }
 }

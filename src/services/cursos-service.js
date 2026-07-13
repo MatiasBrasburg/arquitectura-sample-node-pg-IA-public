@@ -1,4 +1,5 @@
 import CursosRepository from '../repositories/cursos-repository.js';
+import { validarEntidadConNombre } from '../helpers/validaciones-helper.js';
 
 export default class CursosService {
     constructor() {
@@ -20,12 +21,14 @@ export default class CursosService {
 
     createAsync = async (entity) => {
         console.log(`CursosService.createAsync(${JSON.stringify(entity)})`);
+        validarEntidadConNombre(entity, 'curso');
         const rowsAffected = await this.CursosRepository.createAsync(entity);
         return rowsAffected;
     }
 
     updateAsync = async (entity) => {
         console.log(`CursosService.updateAsync(${JSON.stringify(entity)})`);
+        validarEntidadConNombre(entity, 'curso');
         const rowsAffected = await this.CursosRepository.updateAsync(entity);
         return rowsAffected;
     }

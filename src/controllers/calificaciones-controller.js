@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import MateriasService from './../services/materias-service.js'
+import CalificacionesService from './../services/calificaciones-service.js';
 import {
     responderBadRequestJson,
     responderCreado,
@@ -10,17 +10,12 @@ import {
 import { parsearId, validarIdBody } from './../helpers/validaciones-helper.js';
 
 const router = Router();
-const currentService = new MateriasService();
+const currentService = new CalificacionesService();
 
 router.get('', async (req, res) => {
     try {
-        console.log(`MateriasController.get`);
-        const returnArray = await currentService.getAllAsync();
-        if (returnArray != null){
-            responderOk(res, returnArray);
-        } else {
-            responderError(res, new Error('No se pudo obtener la lista de materias.'));
-        }
+        const entities = await currentService.getAllAsync();
+        responderOk(res, entities);
     } catch (error) {
         console.log(error);
         responderError(res, error);
@@ -30,9 +25,10 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const id = parsearId(req.params.id);
-        const returnEntity = await currentService.getByIdAsync(id);
-        if (returnEntity != null){
-            responderOk(res, returnEntity);
+        const entity = await currentService.getByIdAsync(id);
+
+        if (entity != null) {
+            responderOk(res, entity);
         } else {
             responderNotFound(res, `No se encontro la entidad (id:${id}).`);
         }
@@ -44,9 +40,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
     try {
-        let entity = req.body;
-        const newId = await currentService.createAsync(entity);
-        if (newId > 0 ){
+        const newId = await currentService.createAsync(req.body);
+
+        if (newId > 0) {
             responderCreado(res, newId);
         } else {
             responderBadRequestJson(res, null);
@@ -60,13 +56,12 @@ router.post('', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const id = parsearId(req.params.id);
-        let entity = req.body;
-
+        const entity = req.body;
         validarIdBody(entity, id);
-
         entity.id = id;
+
         const rowsAffected = await currentService.updateAsync(entity);
-        if (rowsAffected != 0){
+        if (rowsAffected !== 0) {
             responderOk(res, rowsAffected);
         } else {
             responderNotFound(res, `No se encontro la entidad (id:${id}).`);
@@ -80,8 +75,9 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const id = parsearId(req.params.id);
-        const rowCount = await currentService.deleteByIdAsync(id);
-        if (rowCount != 0){
+        const rowsAffected = await currentService.deleteByIdAsync(id);
+
+        if (rowsAffected !== 0) {
             responderOk(res, null);
         } else {
             responderNotFound(res, `No se encontro la entidad (id:${id}).`);

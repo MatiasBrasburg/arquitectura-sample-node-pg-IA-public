@@ -25,6 +25,7 @@ export default class DbPg {
             returnArray = resultPg.rows;
         } catch (error) {
             LogHelper.logError(error);
+            throw error;
         }
         return returnArray;
     }
@@ -40,6 +41,7 @@ export default class DbPg {
             }
         } catch (error) {
             LogHelper.logError(error);
+            throw error;
         }
         return returnEntity;
     }
@@ -53,6 +55,7 @@ export default class DbPg {
             newId = resultPg.rows[0].id;
         } catch (error) {
             LogHelper.logError(error);
+            throw error;
         }
         return newId;
     }
@@ -66,6 +69,7 @@ export default class DbPg {
             rowsAffected = resultPg.rowCount;
         } catch (error) {
             LogHelper.logError(error);
+            throw error;
         }
         return rowsAffected;
     }
