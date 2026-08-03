@@ -172,7 +172,7 @@ Calificaciones permitió aplicar todos los casos juntos. La nota debe ser entera
 ## 7. 🔗 Adjuntos
 
 - [ ] Link o PDF de la conversación completa con la IA
-- [x] Commit con la implementación: `a52dc1b` (`hecho el 2 casi el 3`)
-- [ ] La carpeta `EJ4` queda pendiente de agregar a un nuevo commit
+- [x] Commit con la implementación base: `a52dc1b` (`hecho el 2 casi el 3`)
+- [x] Carpeta `EJ4` agregada en `55dfc4f` (`casi el 4`)
 - [x] Guía de pruebas: `EJ4/PRUEBAS-POSTMAN.md`
 - [x] Evidencia automática de status 200, 201, 400, 404 y 409

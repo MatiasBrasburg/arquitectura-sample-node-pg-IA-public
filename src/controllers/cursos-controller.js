@@ -8,6 +8,7 @@ import {
     responderOk
 } from './../helpers/respuestas-helper.js';
 import { parsearId, validarIdBody } from './../helpers/validaciones-helper.js';
+import authMiddleware from './../middlewares/auth-middleware.js';
 
 const router = Router();
 const currentService = new CursosService();
@@ -42,7 +43,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('', async (req, res) => {
+router.post('', authMiddleware, async (req, res) => {
     try {
         let entity = req.body;
         const newId = await currentService.createAsync(entity);
@@ -57,7 +58,7 @@ router.post('', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
     try {
         const id = parsearId(req.params.id);
         let entity = req.body;
@@ -77,7 +78,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
     try {
         const id = parsearId(req.params.id);
         const rowCount = await currentService.deleteByIdAsync(id);

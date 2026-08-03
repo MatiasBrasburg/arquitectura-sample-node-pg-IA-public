@@ -20,6 +20,10 @@ export const responderNotFound = (res, mensaje) => {
     return res.status(StatusCodes.NOT_FOUND).send(mensaje);
 };
 
+export const responderNoAutorizado = (res, mensaje) => {
+    return res.status(StatusCodes.UNAUTHORIZED).send(mensaje);
+};
+
 export const responderConflicto = (res, mensaje) => {
     return res.status(StatusCodes.CONFLICT).send(mensaje);
 };

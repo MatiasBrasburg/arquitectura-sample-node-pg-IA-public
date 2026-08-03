@@ -5,15 +5,18 @@ import LogHelper from './../helpers/log-helper.js'
 const { Pool } = pkg;
 
 export default class DbPg {
+    static sharedPool = null;
+
     constructor() {
-        this.DBPool = null;
     }
 
     getDBPool = () => {
-        if (this.DBPool == null) {
-            this.DBPool = new Pool(config);
+        // [IA] Recomendacion elegida: compartir el Pool entre todos los repositories.
+        // [YO] Lo mantuve lazy para no abrir conexiones antes de la primera query.
+        if (DbPg.sharedPool == null) {
+            DbPg.sharedPool = new Pool(config);
         }
-        return this.DBPool;
+        return DbPg.sharedPool;
     }
 
     queryAll = async (sql, values = null) => {

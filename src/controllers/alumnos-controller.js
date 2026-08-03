@@ -9,15 +9,18 @@ import {
     responderOk
 } from './../helpers/respuestas-helper.js';
 import { parsearId, validarIdBody } from './../helpers/validaciones-helper.js';
+import authMiddleware from './../middlewares/auth-middleware.js';
 
 const router = Router();
 const currentService = new AlumnosService();
+
+// [YO] Los GET de lectura quedan públicos; toda ruta que modifica datos exige JWT.
 
 // Endpoint de ejemplo: crear un alumno desde código usando la clase Alumno
 // En vez de recibir los datos del body (req.body), los armamos nosotros desde código.
 // Para eso usamos la clase Alumno de la carpeta entities.
 // Probar con: GET http://localhost:3000/api/alumnos/test-insert
-router.get('/test-insert', async (req, res) => {
+router.get('/test-insert', authMiddleware, async (req, res) => {
     console.log('/test-insert');
     try {
         const nuevoAlumno = new Alumno('Willy', 'Wonka', 1, '2005-07-15', true);
@@ -70,7 +73,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('', async (req, res) => {
+router.post('', authMiddleware, async (req, res) => {
     try {
         let entity = req.body;
         const newId = await currentService.createAsync(entity);
@@ -85,7 +88,7 @@ router.post('', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
     try {
         const id = parsearId(req.params.id);
         let entity = req.body;
@@ -105,7 +108,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
     try {
         const id = parsearId(req.params.id);
         const rowCount = await currentService.deleteByIdAsync(id);
