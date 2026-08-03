@@ -26,7 +26,7 @@ Pegá **todos** los prompts que usaste, en orden, con la respuesta resumida y qu
 ### Prompt #1
 
 **Lo que escribí:**
- rol: desarollador backen senior con muchisma expereicnai en node, js y sql con postgres en pg admin
+ rol: desarollador backen senior con muchisma expereicnai en node, js y sql con postgres en pg adminG
    contexto C:\Users\devandroid\arquitectura-sample-node-pg-IA-public
 
    mira tengo este proyecto, quiero que me crees uayabla con esto: CREATE TABLE materias (
