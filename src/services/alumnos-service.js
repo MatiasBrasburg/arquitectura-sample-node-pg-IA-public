@@ -5,10 +5,10 @@ import { ErrorValidacion } from '../helpers/errores-helper.js';
 import { validarAlumno } from '../helpers/validaciones-helper.js';
 
 export default class AlumnosService {
-    constructor() {
+    constructor(alumnosRepository = new AlumnosRepository(), cursosService = new CursosService()) {
         console.log('Estoy en: AlumnosService.constructor()');
-        this.AlumnosRepository = new AlumnosRepository();
-        this.CursosService = new CursosService();
+        this.AlumnosRepository = alumnosRepository;
+        this.CursosService = cursosService;
     }
 
     getAllAsync = async () => {

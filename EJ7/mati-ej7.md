@@ -328,3 +328,17 @@ Por ultimo hice una prueba de mutacion manual: cambie edad-- por edad++ y npm te
 - [ ] Conversacion completa con IA: pendiente de exportar.
 - [ ] Commit en GitHub: pendiente.
 - [ ] Capturas de terminal/Postman: pendiente.
+
+---
+
+## 11. Ampliacion de testing general - 10/08/2026
+
+Despues de la primera entrega se aplico la estrategia completa de la guia `GUIA-NODE-TEST.pdf` al proyecto, no solamente los requisitos minimos del ejercicio 7.
+
+Se reorganizo la suite en `test/unit` y `test/integration` y se agregaron scripts separados para ejecutar tests unitarios, de integracion, en modo watch y con cobertura. Los nuevos tests recorren las familias de casos propuestas en la guia: caso tipico, bordes, minimos y maximos, fuera de rango, nulos/vacios e invalidos.
+
+Tambien se incorporaron mocks manuales e inyeccion de dependencias para probar `AlumnosService` y `CalificacionesService` sin levantar PostgreSQL. Se comprueba tanto el resultado como el comportamiento: por ejemplo, ante un curso inexistente o una calificacion duplicada, el repository no debe escribir.
+
+La ampliacion incluye pruebas del middleware JWT para header ausente, formato incorrecto, configuracion faltante, firma invalida, token vencido y token valido. En calificaciones se cubren create y update, incluida la traduccion del error PostgreSQL `23505` a conflicto HTTP 409.
+
+Resultado actualizado: `38 tests`, `38 pass`, `0 fail`. La cobertura se verifica con `npm run test:coverage` y la suite completa sigue sin depender de una base de datos activa.

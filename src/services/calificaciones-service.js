@@ -5,11 +5,15 @@ import { ErrorConflicto, ErrorValidacion } from '../helpers/errores-helper.js';
 import { validarCalificacion } from '../helpers/validaciones-helper.js';
 
 export default class CalificacionesService {
-    constructor() {
+    constructor(
+        calificacionesRepository = new CalificacionesRepository(),
+        alumnosService = new AlumnosService(),
+        materiasService = new MateriasService()
+    ) {
         console.log('Estoy en: CalificacionesService.constructor()');
-        this.CalificacionesRepository = new CalificacionesRepository();
-        this.AlumnosService = new AlumnosService();
-        this.MateriasService = new MateriasService();
+        this.CalificacionesRepository = calificacionesRepository;
+        this.AlumnosService = alumnosService;
+        this.MateriasService = materiasService;
     }
 
     getAllAsync = async () => {

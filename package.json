@@ -6,7 +6,11 @@
   "type": "module",
   "scripts": {
     "server": "cls && node --watch src/server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "test:unit": "node --test test/unit/*.test.js",
+    "test:integration": "node --test test/integration/*.test.js",
+    "test:watch": "node --test --watch",
+    "test:coverage": "node --test --experimental-test-coverage"
   },
   "author": "",
   "license": "ISC",
